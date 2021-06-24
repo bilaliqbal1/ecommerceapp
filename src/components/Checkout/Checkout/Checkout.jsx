@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button } from '@material-ui/core';
 import useStyles from './styles';
 import AddressForm from '../AddressForm';
@@ -8,7 +8,18 @@ const steps = ['Shipping Address', 'Payment Details'];
 
 const Checkout = () => {
         const classes = useStyles();
-        const [activeStep, setActiveStep] = useState(2);
+        const [activeStep, setActiveStep] = useState(0);
+
+        useEffect(()=>{
+            const generateToken = async () =>{
+                try{
+
+                }
+                catch(error){
+                    
+                }
+            }
+        },[])
 
         const Form = () => activeStep === 0 ? <AddressForm /> : <PaymentForm />
 
