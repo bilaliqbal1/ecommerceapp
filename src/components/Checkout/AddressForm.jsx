@@ -1,11 +1,11 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import { Button, InputLabel, Select, MenuItem, Grid, Typography } from '@material-ui/core';
 import { useForm, FormProvider } from 'react-hook-form';
 import CustomField from './CustomField';
 
 import {commerce} from '../../lib/commerce';
 
-const AddressForm = () => {
+const AddressForm = ({checkoutToken}) => {
     const methods = useForm();
 
     const [shipping, setshipping] = useState([]);
@@ -15,11 +15,15 @@ const AddressForm = () => {
     const [shippingOptions, setShippingOptions] = useState([]);
     const [shippingOption, setShippingOption] = useState([]);
 
-    const fetchCountries = (checkoutTokenId) =>{
+    const fetchCountries = async (checkoutTokenId) =>{
         const {countries} = await commerce.services.localeListShippingCountries(checkoutTokenId);
 
+            // console.log(countries);
         setCountries(countries);
     }
+    useEffect(()=>{
+        fetchCountries(checkoutToken.id)
+    },[])
     return (
         <>
             <Typography variant="h6" gutterBottom>
@@ -36,27 +40,27 @@ const AddressForm = () => {
                         <CustomField required name="Zip" label="Zip /Post code" />
                             <Grid item xs={12} sm={6}>
                                 <InputLabel>Shipping Country</InputLabel>
-                                <Select value={} fullWidth onchange={}>
+                                {/* <Select value={} fullWidth onchange={}>
                                     <MenuItem key={}>
                                         Select Me
                                     </MenuItem>
-                                </Select>
+                                </Select> */}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <InputLabel>Shipping Subdivisions</InputLabel>
-                                <Select value={} fullWidth onchange={}>
+                                {/* <Select value={} fullWidth onchange={}>
                                     <MenuItem key={}>
                                         Select Me
                                     </MenuItem>
-                                </Select>
+                                </Select> */}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <InputLabel>Shipping Country</InputLabel>
-                                <Select value={} fullWidth onchange={}>
+                                {/* <Select value={} fullWidth onchange={}>
                                     <MenuItem key={}>
                                         Select Me
                                     </MenuItem>
-                                </Select>
+                                </Select> */}
                             </Grid>
                     </Grid>
                 </form>
