@@ -9,11 +9,11 @@ const AddressForm = ({checkoutToken}) => {
     const methods = useForm();
 
     const [shippingCountries, setShippingCountries] = useState([]);
-    const [shippingCountry, setShippingCountry] = useState([]);
+    const [shippingCountry, setShippingCountry] = useState('');
     const [subDivisions, setSubDivisions] = useState([]);
     const [subDivision, setSubDivision] = useState('');
     const [shippingOptions, setShippingOptions] = useState([]);
-    const [shippingOption, setShippingOption] = useState([]);
+    const [shippingOption, setShippingOption] = useState('');
 
     const countries = Object.entries(shippingCountries).map(([code, name]) => (
         {id: code, label:name}
@@ -21,7 +21,7 @@ const AddressForm = ({checkoutToken}) => {
     const division = Object.entries(subDivisions).map(([code, name]) => (
         {id: code, label:name}
     ));
-    // console.log(countries);
+    console.log(countries);
 
     const fetchCountries = async (checkoutTokenId) =>{
         const {countries} = await commerce.services.localeListShippingCountries(checkoutTokenId);
@@ -43,7 +43,7 @@ const AddressForm = ({checkoutToken}) => {
     },[])
 
     useEffect(()=>{
-        if (shippingCountry) fetchSubdivsion(shippingCountry);
+        if(shippingCountry) fetchSubdivsion(shippingCountry);
     },[shippingCountry])
     return (
         <>
@@ -72,9 +72,9 @@ const AddressForm = ({checkoutToken}) => {
                             <Grid item xs={12} sm={6}>
                                 <InputLabel>Shipping Subdivisions</InputLabel> 
                                 <Select value={subDivision} fullWidth onchange={(e)=> setSubDivision(e.target.value)}>
-                                {division.map((subDivision)=>(
-                                    <MenuItem key={subDivision.id} value={subDivision.id}>
-                                        {subDivision.label}
+                                {division.map((subdivision)=>(
+                                    <MenuItem key={subdivision.id} value={subdivision.id}>
+                                        {subdivision.label}
                                     </MenuItem>
                                 ))} 
                                 </Select>
